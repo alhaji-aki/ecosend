@@ -64,7 +64,7 @@ class Order extends Model
 
     public function generateOrderNo(): string
     {
-        $invoiceNo = rand(10000000, 99999999);
+        $invoiceNo = (string) rand(10000000, 99999999);
 
         while (
             self::query()

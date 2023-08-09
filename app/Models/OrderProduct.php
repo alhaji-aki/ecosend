@@ -41,7 +41,7 @@ class OrderProduct extends Model
     protected function formattedPrice(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->amount / 100
+            get: fn () => $this->price / 100
         );
     }
 }

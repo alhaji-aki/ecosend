@@ -8,16 +8,18 @@ use App\Models\Country;
 use App\Models\Order;
 use App\Models\State;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
 
 class OrderController extends Controller
 {
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
         return view('welcome');
     }
@@ -25,7 +27,7 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreOrderRequest $request)
+    public function store(StoreOrderRequest $request): JsonResponse
     {
         $data = (array) $request->validated();
 
@@ -34,7 +36,10 @@ class OrderController extends Controller
 
         try {
             DB::transaction(function () use ($data) {
-                $orderProducts = collect($data['products'] ?? [])->map(fn (array $product) => [...$product, 'price' => $product['price'] * 100]);
+                /** @var array<int, array> */
+                $products = $data['products'] ?? [];
+
+                $orderProducts = collect($products)->map(fn (array $product) => [...$product, 'price' => $product['price'] * 100]);
 
                 // create the order
                 $order = Order::query()->create([
