@@ -71,4 +71,3 @@ jobs:
             composer install --optimize-autoloader --no-dev
             php artisan optimize
             php artisan migrate --force
-            php artisan queue:restart
