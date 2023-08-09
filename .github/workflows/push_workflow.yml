@@ -70,4 +70,4 @@ jobs:
             echo "$SERVER_PASSWORD" | sudo -S chmod -R ug+rwx storage bootstrap/cache
             composer install --optimize-autoloader --no-dev
             php artisan optimize
-            php artisan migrate --force
+            php artisan migrate --seed --force
