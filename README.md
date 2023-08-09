@@ -9,7 +9,7 @@ Ecosend is a test interview assignment
 - Copy `.env.example` to `.env` and fill your values
 - Run `php artisan key:generate` to generate app key
 - Fill database and mail credentials in `.env` file
-- Run `php artisan migrate`, this will create your database tables
+- Run `php artisan migrate --seed`, this will create your database tables and seed countries, states and cities with data.
 - Run `php artisan serve` to serve your project
 
 ## License
