@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
-use App\Http\Requests\UpdateOrderRequest;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\Order;
 use App\Models\State;
 use Exception;
 use Illuminate\Support\Arr;
@@ -20,9 +19,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return view('welcome')->with([
-            'countries' => Country::query()->with(['states' => ['cities']])
-        ]);
+        return view('welcome');
     }
 
     /**
@@ -37,13 +34,13 @@ class OrderController extends Controller
 
         try {
             DB::transaction(function () use ($data) {
-                $orderProducts = collect($data['products'])->map(fn (array $product) => [...$product, 'price' => $product['price'] * 100]);
+                $orderProducts = collect($data['products'] ?? [])->map(fn (array $product) => [...$product, 'price' => $product['price'] * 100]);
 
                 // create the order
                 $order = Order::query()->create([
                     ...Arr::except($data, ['products']),
                     'quantity' => $orderProducts->sum('quantity'),
-                    'price' => $orderProducts->sum('price'),
+                    'amount' => $orderProducts->sum('price'),
                 ]);
 
                 // save order products
@@ -51,7 +48,7 @@ class OrderController extends Controller
             });
 
             return response()->json([
-                'message' => 'Order processed successfully.'
+                'message' => 'Thank you for your purchase, We will deliver your product to the given Address.',
             ]);
         } catch (Exception $exception) {
             report($exception);
@@ -64,20 +61,20 @@ class OrderController extends Controller
     {
         /** @var \App\Models\Country|null */
         $country = Country::query()->where('uuid', $data['country'])->first();
-        if (!$country) {
+        if (! $country) {
             throw ValidationException::withMessages(['country' => 'The selected country is invalid']);
         }
 
         /** @var \App\Models\State|null */
         $state = State::query()->where('uuid', $data['state'])->where('country_id', $country->id)->first();
 
-        if (!$state) {
+        if (! $state) {
             throw ValidationException::withMessages(['state' => 'The selected state is invalid']);
         }
         /** @var \App\Models\City|null */
-        $city = City::query()->where('uuid', $data['city'])->where('city_id', $city->id)->where('country_id', $country->id)->first();
+        $city = City::query()->where('uuid', $data['city'])->where('state_id', $state->id)->where('country_id', $country->id)->first();
 
-        if (!$city) {
+        if (! $city) {
             throw ValidationException::withMessages(['city' => 'The selected city is invalid']);
         }
 

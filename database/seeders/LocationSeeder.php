@@ -5,12 +5,10 @@ namespace Database\Seeders;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\State;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Illuminate\Support\LazyCollection;
+use Illuminate\Support\Str;
 
 class LocationSeeder extends Seeder
 {

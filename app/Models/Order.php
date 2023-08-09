@@ -68,8 +68,8 @@ class Order extends Model
 
         while (
             self::query()
-            ->where('order_no', $invoiceNo)
-            ->exists()
+                ->where('order_no', $invoiceNo)
+                ->exists()
         ) {
             $this->generateOrderNo();
         }

@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\CityController;
+use App\Http\Controllers\CountryController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\StateController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [OrderController::class, 'create'])->name('orders.create');
 Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+
+Route::get('countries', CountryController::class)->name('countries.index');
+Route::get('countries/{country:uuid}/states', StateController::class)->name('states.index');
+Route::get('states/{state:uuid}/cities', CityController::class)->name('cities.index');
