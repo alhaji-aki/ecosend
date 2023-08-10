@@ -122,8 +122,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary btn-submit">Submit</button>
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
                     </div>
@@ -315,6 +315,10 @@
 
                     $('#addProductModal').modal('hide');
                 },
+            });
+
+            $('#addProductModal').on('hidden.bs.modal', function (e) {
+                $(this).find('#productForm')[0].reset();
             });
 
             function formatSelectData(data) {
