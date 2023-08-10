@@ -17,73 +17,84 @@
     <body>
         <div class="container-sm">
          <div class="row">
-            <div class="col-sm-12 col-md-8 col-lg-7 mx-auto">
-                <form class="row g-3" id="order-form" method="POST" action="{{ route('orders.store') }}">
+            <div class="col-sm-12 col-md-8 col-lg-7 mx-auto pt-4">
+                <form class="g-3" id="order-form" method="POST" action="{{ route('orders.store') }}">
                     @csrf
-                    <div class="col-12 row g-2">
-                        <div class="col-2">
-                            <label for="name" class="form-label">Name</label>
-                        </div>
-                        <div class="col-10">
+                    <div class="row mb-3">
+                        <label for="name" class="col-sm-2 col-form-label">Name</label>
+                        <div class="col-sm-10">
                             <input required type="text" class="form-control" id="name" name="name" placeholder="Name">
                         </div>
                     </div>
-                    <div class="col-12">
-                        <label for="description" class="form-label">Description</label>
-                        <input type="text" class="form-control" id="description" name="description" placeholder="Description">
+                    <div class="row mb-3">
+                        <label for="description" class="col-sm-2 col-form-label">Description</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="description" name="description" placeholder="Description">
+                        </div>
                     </div>
-                    <div class="col-12">
-                        <label for="address" class="form-label">Address</label>
-                        <input required type="text" class="form-control" id="address" name="address" placeholder="Address">
+                    <div class="row mb-3">
+                        <label for="address" class="col-sm-2 col-form-label">Address</label>
+                        <div class="col-sm-10">
+                            <input required type="text" class="form-control" id="address" name="address" placeholder="Address">
+                        </div>
                     </div>
-                    <div class="col-12">
-                        <label for="country" class="form-label">Country</label>
-                        <select data-placeholder="Select your country" data-theme="bootstrap-5"
-                            data-ajax--url="{{ route('countries.index') }}" data-ajax--cache="false" data-affects="#state" required
-                            id="country" name="country" class="form-select select2">
-                            <option></option>
-                        </select>
+                    <div class="row mb-3">
+                        <label for="country" class="col-sm-2 col-form-label">Country</label>
+                        <div class="col-sm-10">
+                            <select data-placeholder="Select your country" data-theme="bootstrap-5"
+                                data-ajax--url="{{ route('countries.index') }}" data-ajax--cache="false" data-affects="#state" required
+                                id="country" name="country" class="form-select select2">
+                                <option></option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <label for="state" class="form-label">State</label>
-                        <select data-placeholder="Select your state" data-theme="bootstrap-5"
-                            data-url="{{ route('states.index', ':id') }}" data-ajax--cache="false" data-depends-on="#country"
-                            data-affects="#city" required id="state" name="state" class="form-select select2">
-                            <option></option>
-                        </select>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="state" class="form-label">State</label>
+                            <select data-placeholder="Select your state" data-theme="bootstrap-5"
+                                data-url="{{ route('states.index', ':id') }}" data-ajax--cache="false" data-depends-on="#country"
+                                data-affects="#city" required id="state" name="state" class="form-select select2">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="city" class="form-label">City</label>
+                            <select data-placeholder="Select your city" data-theme="bootstrap-5"
+                                data-url="{{ route('cities.index', ':id') }}" data-ajax--cache="false" data-depends-on="#state" required
+                                id="city" name="city" class="form-select select2">
+                                <option></option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <label for="city" class="form-label">City</label>
-                        <select data-placeholder="Select your city" data-theme="bootstrap-5"
-                            data-url="{{ route('cities.index', ':id') }}" data-ajax--cache="false" data-depends-on="#state" required
-                            id="city" name="city" class="form-select select2">
-                            <option></option>
-                        </select>
-                    </div>
-                    <div class="col-12">
-                        <label for="zip_code" class="form-label">Zip Code</label>
-                        <input required type="text" class="form-control" id="zip_code" name="zip_code" placeholder="">
+                    <div class="row mb-3">
+                        <label for="zip_code" class="col-sm-2 col-form-label">Zip Code</label>
+                        <div class="col-sm-10">
+                            <input required type="text" class="form-control" id="zip_code" name="zip_code" placeholder="Zip code">
+                        </div>
                     </div>
 
-                    <div class="col-12 g-3">
-                        <button type="button" class="btn btn-secondary float-end" data-bs-toggle="modal" data-bs-target="#addProductModal">
-                            Add Product <i class="fa fa-plus"></i>
-                        </button>
-
-                        <table id="productsTable" data-responsive="true" width="100%" data-dom="" data-paging="false"
-                            data-searching="false" data-ordering="false" class="display">
-                            <thead>
-                                <tr>
-                                    <th data-name="serial_no" data-data="serial_no">S. no</th>
-                                    <th data-name="name" data-data="name">Product Name</th>
-                                    <th data-name="price" data-data="price">Price</th>
-                                    <th data-name="quantity" data-data="quantity">Qt.</th>
-                                    <th data-name="status" data-data="status">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <button type="button" class="btn btn-secondary float-end" data-bs-toggle="modal" data-bs-target="#addProductModal">
+                                Add Product <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <table id="productsTable" data-responsive="true" width="100%" data-dom="" data-paging="false"
+                                data-searching="false" data-ordering="false" class="display">
+                                <thead>
+                                    <tr>
+                                        <th data-name="serial_no" data-data="serial_no">S. no</th>
+                                        <th data-name="name" data-data="name">Product Name</th>
+                                        <th data-name="price" data-data="price">Price</th>
+                                        <th data-name="quantity" data-data="quantity">Qt.</th>
+                                        <th data-name="status" data-data="status">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                     <div class="col-12 d-flex justify-content-center">
